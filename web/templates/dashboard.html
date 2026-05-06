@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yad2 Apartment Search</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <div class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span>Yad2 Search</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="header-btn" id="btn-notifications" title="Notifications">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"></path><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"></path></svg>
+            </button>
+            <button class="header-btn" id="btn-saved" title="Saved listings">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg>
+                <span>Saved</span>
+            </button>
+            <div class="avatar">SL</div>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="search-bar">
+            <div class="search-field">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <input type="text" id="city-input" list="city-list" placeholder="City or area..." autocomplete="off">
+                <datalist id="city-list"></datalist>
+                <input type="hidden" id="city" value="">
+            </div>
+            <div class="search-divider"></div>
+            <div class="search-field search-field-range">
+                <div class="range-shell" dir="ltr">
+                    <input type="number" id="rooms_max" class="range-number" placeholder="max" min="1" max="12" step="0.5" aria-label="Rooms max">
+                    <span class="range-dash">–</span>
+                    <input type="number" id="rooms_min" class="range-number" placeholder="min" min="1" max="12" step="0.5" aria-label="Rooms min">
+                    <span class="range-label">Rooms</span>
+                    <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4v16"></path><path d="M2 8h18a2 2 0 0 1 2 2v10"></path><path d="M2 17h20"></path><path d="M6 8v9"></path></svg>
+                </div>
+            </div>
+            <div class="search-divider"></div>
+            <div class="search-field search-field-range">
+                <div class="range-shell" dir="ltr">
+                    <input type="number" id="price_max" class="range-number" placeholder="max" step="500" aria-label="Price max">
+                    <span class="range-dash">–</span>
+                    <input type="number" id="price_min" class="range-number" placeholder="min" step="500" aria-label="Price min">
+                    <span class="range-label">Price</span>
+                    <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"></rect><circle cx="12" cy="12" r="2"></circle><path d="M6 12h.01M18 12h.01"></path></svg>
+                </div>
+            </div>
+            <div class="search-divider"></div>
+            <div class="search-field search-field-range">
+                <div class="range-shell" dir="ltr">
+                    <input type="number" id="size_max" class="range-number" placeholder="max" aria-label="Size max">
+                    <span class="range-dash">–</span>
+                    <input type="number" id="size_min" class="range-number" placeholder="min" aria-label="Size min">
+                    <span class="range-label">Size</span>
+                    <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"></path><path d="m14.5 12.5 2-2"></path></svg>
+                </div>
+            </div>
+            <button id="btn-clear" type="button" class="clear-btn" title="Clear filters" onclick="clearFiltersOnly()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+            </button>
+            <button id="btn-search" class="search-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+                <span>Search</span>
+            </button>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="filter-chips">
+            <label class="chip" data-filter="has_elevator">
+                <input type="checkbox" id="has_elevator">
+                <svg class="chip-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Elevator</span>
+            </label>
+            <label class="chip" data-filter="has_parking">
+                <input type="checkbox" id="has_parking">
+                <svg class="chip-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Parking</span>
+            </label>
+            <label class="chip" data-filter="has_balcony">
+                <input type="checkbox" id="has_balcony">
+                <svg class="chip-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Balcony</span>
+            </label>
+            <label class="chip" data-filter="has_ac">
+                <input type="checkbox" id="has_ac">
+                <svg class="chip-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>A/C</span>
+            </label>
+            <label class="chip" data-filter="has_mamad">
+                <input type="checkbox" id="has_mamad">
+                <svg class="chip-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Mamad</span>
+            </label>
+            <label class="chip" data-filter="is_furnished">
+                <input type="checkbox" id="is_furnished">
+                <svg class="chip-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Furnished</span>
+            </label>
+            <label class="chip" data-filter="pets_allowed">
+                <input type="checkbox" id="pets_allowed">
+                <svg class="chip-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                <span>Pets</span>
+            </label>
+
+            <div class="chips-extra">
+                <button id="btn-filter" type="button" class="filter-cached-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                    <span>Filter Cached</span>
+                </button>
+                <button id="btn-clear-all" type="button" class="clear-search-btn" onclick="clearSearch()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+                    <span>Clear Search</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div id="status-bar" class="status-bar hidden">
+            <div class="spinner"></div>
+            <span id="status-text"></span>
+        </div>
+    </section>
+
+    <!-- Results Area -->
+    <main class="results-area">
+        <div class="results-bar">
+            <span id="results-count" class="results-count">No results yet</span>
+            <div class="results-controls">
+                <div class="sort-control">
+                    <span class="sort-label">Sort by:</span>
+                    <select id="sort-select" class="sort-select">
+                        <option value="date_scraped-DESC">Newest</option>
+                        <option value="price-ASC">Price: Low to High</option>
+                        <option value="price-DESC">Price: High to Low</option>
+                        <option value="rooms-ASC">Rooms: Low to High</option>
+                        <option value="rooms-DESC">Rooms: High to Low</option>
+                        <option value="size_sqm-ASC">Size: Small to Large</option>
+                        <option value="size_sqm-DESC">Size: Large to Small</option>
+                    </select>
+                </div>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="grid" title="Grid view">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect></svg>
+                    </button>
+                    <button class="view-btn" data-view="list" title="List view">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" x2="21" y1="6" y2="6"></line><line x1="8" x2="21" y1="12" y2="12"></line><line x1="8" x2="21" y1="18" y2="18"></line><line x1="3" x2="3.01" y1="6" y2="6"></line><line x1="3" x2="3.01" y1="12" y2="12"></line><line x1="3" x2="3.01" y1="18" y2="18"></line></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card Grid View -->
+        <div id="results-grid" class="results-grid"></div>
+
+        <!-- List View (hidden by default) -->
+        <div id="results-list" class="results-list hidden">
+            <table id="results-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Price</th>
+                        <th>Rooms</th>
+                        <th>Size</th>
+                        <th>Floor</th>
+                        <th>Address</th>
+                        <th>Features</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody id="results-body"></tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+    </main>
+
+    <!-- Quick View Modal -->
+    <div id="modal-overlay" class="modal-overlay hidden" onclick="closeModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+            </button>
+            <div class="modal-image">
+                <img id="modal-img" src="" alt="Apartment">
+                <div id="modal-img-placeholder" class="modal-img-placeholder">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect><circle cx="9" cy="9" r="2"></circle><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path></svg>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="modal-price-row">
+                    <span id="modal-price" class="modal-price"></span>
+                    <span id="modal-badge" class="card-badge"></span>
+                </div>
+                <div id="modal-address" class="modal-address"></div>
+
+                <div class="modal-details-grid">
+                    <div class="modal-detail">
+                        <span class="modal-detail-label">Rooms</span>
+                        <span id="modal-rooms" class="modal-detail-value"></span>
+                    </div>
+                    <div class="modal-detail">
+                        <span class="modal-detail-label">Size</span>
+                        <span id="modal-size" class="modal-detail-value"></span>
+                    </div>
+                    <div class="modal-detail">
+                        <span class="modal-detail-label">Floor</span>
+                        <span id="modal-floor" class="modal-detail-value"></span>
+                    </div>
+                    <div class="modal-detail">
+                        <span class="modal-detail-label">City</span>
+                        <span id="modal-city" class="modal-detail-value"></span>
+                    </div>
+                    <div class="modal-detail">
+                        <span class="modal-detail-label">Neighborhood</span>
+                        <span id="modal-neighborhood" class="modal-detail-value"></span>
+                    </div>
+                    <div class="modal-detail">
+                        <span class="modal-detail-label">Street</span>
+                        <span id="modal-street" class="modal-detail-value"></span>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <span class="modal-section-title">Features</span>
+                    <div id="modal-features" class="modal-features"></div>
+                </div>
+
+                <div id="modal-desc-section" class="modal-section">
+                    <span class="modal-section-title">Description</span>
+                    <p id="modal-description" class="modal-description"></p>
+                </div>
+
+                <div class="modal-actions">
+                    <a id="modal-link" href="#" target="_blank" class="modal-btn-primary">
+                        View on Yad2
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" x2="21" y1="14" y2="3"></line></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
